@@ -9,4 +9,5 @@ dotenv.config({
 export default {
   port: process.env.PORT,
   database_uri: process.env.DATABASE_URI,
+  bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS,
 };
