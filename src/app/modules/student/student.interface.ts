@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Model, Types } from "mongoose";
 
 export type TGuardian = {
@@ -28,7 +29,7 @@ export type TStudent = {
   password: string;
   name: TUserName;
   gender: "male" | "female" | "other";
-  dateOfBirth?: string;
+  dateOfBirth?: Date;
   email: string;
   contactNo: string;
   emergencyContactNo: string;

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const userNameSchema = z.object({
+const userNameValidationSchema = z.object({
   firstName: z
     .string()
     .min(1)
@@ -12,7 +12,7 @@ const userNameSchema = z.object({
   lastName: z.string(),
 });
 
-const guardianSchema = z.object({
+const guardianValidationSchema = z.object({
   fatherName: z.string(),
   fatherOccupation: z.string(),
   fatherContactNo: z.string(),
@@ -21,34 +21,33 @@ const guardianSchema = z.object({
   motherContactNo: z.string(),
 });
 
-const localGuardianSchema = z.object({
+const localGuardianValidationSchema = z.object({
   name: z.string(),
   occupation: z.string(),
   contactNo: z.string(),
   address: z.string(),
 });
 
-export const studentValidationSchema = z.object({
-  id: z.string(),
-  user: z.object({
+const createStudentValidationSchema = z.object({
+  body: z.object({
     password: z.string().max(20),
-    role: z.enum(["student", "faculty", "admin"]),
-    id: z.string(),
+    student: z.object({
+      name: userNameValidationSchema,
+      gender: z.enum(["male", "female", "other"]),
+      dateOfBirth: z.date().optional(),
+      email: z.string().email(),
+      contactNo: z.string(),
+      emergencyContactNo: z.string(),
+      bloogGroup: z.enum(["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]),
+      presentAddress: z.string(),
+      permanentAddress: z.string(),
+      guardian: guardianValidationSchema,
+      localGuardian: localGuardianValidationSchema,
+      profileImg: z.string().optional(),
+    }),
   }),
-  password: z.string().max(20),
-  name: userNameSchema,
-  gender: z.enum(["male", "female", "other"]),
-  dateOfBirth: z.string(),
-  email: z.string().email(),
-  contactNo: z.string(),
-  emergencyContactNo: z.string(),
-  bloogGroup: z.enum(["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]),
-  presentAddress: z.string(),
-  permanentAddress: z.string(),
-  guardian: guardianSchema,
-  localGuardian: localGuardianSchema,
-  profileImg: z.string().optional(),
-  isDeleted: z.boolean(),
 });
 
-export default studentValidationSchema;
+export const studentValidations = {
+  createStudentValidationSchema,
+};
